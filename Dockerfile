@@ -2,7 +2,7 @@ FROM node:24-slim AS builder
 
 WORKDIR /app
 COPY package.json package-lock.json tsconfig.json ./
-RUN npm ci --omit=dev
+RUN npm ci
 COPY src ./src
 RUN npm run build
 
@@ -22,7 +22,8 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 ENV PUPPETEER_EXECUTABLE_PATH "/usr/bin/google-chrome"
 
 WORKDIR /app
-COPY --from=builder /app/node_modules ./node_modules
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev
 COPY --from=builder /app/dist ./dist
 COPY .env ./
 
