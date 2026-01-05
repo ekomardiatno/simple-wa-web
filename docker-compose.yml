@@ -1,0 +1,12 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    env_file:
+      # Set the environment variable to .env file
+      - .env
+    command: ["node", "dist/server.js"]
+    volumes:
+      - ./whatsapp-session:/app/whatsapp-session
