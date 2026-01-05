@@ -1,7 +1,7 @@
 FROM node:24-slim AS builder
 
 WORKDIR /app
-COPY package.json tsconfig.json ./
+COPY package.json package-lock.json tsconfig.json ./
 RUN npm ci --omit=dev
 COPY src ./src
 RUN npm run build
